@@ -3,12 +3,14 @@ const app = express();
 const mongoose = require('mongoose')
 require('dotenv/config')
 
-app.get('/', (req, res) => {
-    res.send('We are home')
-})
+const postsRoute = require('./routes/posts')
 
-mongoose.connect(process.env.DB_CONNECTION, () =>
-    console.log('connected to db')
+app.use('/posts', postsRoute)
+
+mongoose.connect(
+    process.env.DB_CONNECTION,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => console.log('connected to db')
 )
 
 app.listen(5000);
